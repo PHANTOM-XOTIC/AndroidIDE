@@ -19,12 +19,12 @@ package com.itsaky.androidide.projects.api
 
 import android.text.TextUtils
 import com.itsaky.androidide.tooling.api.model.GradleTask
-import com.itsaky.androidide.utils.ClassTrie
+import com.itsaky.androidide.utils.BootClasspathProvider
 import com.itsaky.androidide.utils.ClasspathReader
 import com.itsaky.androidide.utils.DocumentUtils
 import com.itsaky.androidide.utils.ILogger
-import com.itsaky.androidide.utils.SourceClassTrie
 import com.itsaky.androidide.utils.SourceClassTrie.SourceNode
+import com.itsaky.androidide.utils.StopWatch
 import java.io.File
 import java.nio.file.Path
 
@@ -53,8 +53,8 @@ abstract class ModuleProject(
     const val USAGE_RUNTIME = "java-runtime"
   }
 
-  @JvmField val compileJavaSourceClasses = SourceClassTrie()
-  @JvmField val compileClasspathClasses = ClassTrie()
+  @JvmField val compileJavaSourceClasses = com.itsaky.androidide.utils.SourceClassTrie()
+  @JvmField val compileClasspathClasses = com.itsaky.androidide.utils.ClassTrie()
 
   /**
    * Get the source directories of this module (non-transitive i.e for this module only).
@@ -97,6 +97,7 @@ abstract class ModuleProject(
   fun indexSourcesAndClasspaths() {
     log.info("Indexing sources and classpaths for project:", path)
 
+    var watch = StopWatch("Indexing sources")
     var count = 0
     getCompileSourceDirectories().forEach {
       val sourceDir = it.toPath()
@@ -110,12 +111,20 @@ abstract class ModuleProject(
         }
     }
 
-    log.debug("Sources indexed for project: '$path'. Found $count source files.")
+    watch.log()
+    log.debug("Found $count source files.")
 
+    watch = StopWatch("Indexing classpaths")
     val paths = getCompileClasspaths().filter { it.exists() }
     val topLevelClasses = ClasspathReader.listClasses(paths).filter { it.isTopLevel }
     topLevelClasses.forEach { this.compileClasspathClasses.append(it.name) }
-    log.debug("Classpaths indexed for project: '$path'. Found ${topLevelClasses.size} classpaths.")
+
+    watch.log()
+    log.debug("Found ${topLevelClasses.size} classpaths.")
+
+    if (this is AndroidModule) {
+      BootClasspathProvider.update(bootClassPaths.map { it.path })
+    }
   }
 
   fun getSourceFilesInDir(dir: Path): List<SourceNode> =
