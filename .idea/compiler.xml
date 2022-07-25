@@ -13,15 +13,25 @@
     <bytecodeTargetLevel target="1.8">
       <module name="AndroidIDE.build-tools.builder-api" target="11" />
       <module name="AndroidIDE.build-tools.builder-model" target="11" />
+      <module name="AndroidIDE.build-tools.eventbus" target="11" />
+      <module name="AndroidIDE.build-tools.eventbus-android" target="11" />
+      <module name="AndroidIDE.build-tools.eventbus-events" target="11" />
+      <module name="AndroidIDE.build-tools.eventbus-events.main" target="11" />
       <module name="AndroidIDE.build-tools.eventbus-events.test" target="11" />
       <module name="AndroidIDE.build-tools.eventbus-models.main" target="11" />
       <module name="AndroidIDE.build-tools.eventbus-models.test" target="11" />
+      <module name="AndroidIDE.build-tools.eventbus.main" target="11" />
+      <module name="AndroidIDE.build-tools.eventbus.test" target="11" />
+      <module name="AndroidIDE.build-tools.logger" target="11" />
+      <module name="AndroidIDE.build-tools.logger.main" target="11" />
+      <module name="AndroidIDE.build-tools.logger.test" target="11" />
       <module name="AndroidIDE.build-tools.project" target="11" />
       <module name="AndroidIDE.build-tools.tooling-api-plugin" target="11" />
       <module name="AndroidIDE.google-java-format" target="1.8" />
       <module name="AndroidIDE.gradle-tooling" target="1.8" />
       <module name="AndroidIDE.gradle-tooling.plugin" target="1.8" />
       <module name="AndroidIDE.javac" target="1.8" />
+      <module name="AndroidIDE.treesitter.test" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

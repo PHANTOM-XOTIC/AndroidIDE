@@ -14,8 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdk
@@ -44,9 +46,5 @@ android {
 }
 
 dependencies {
-    implementation common.jkotlin
-    implementation project (path: ':shared')
-    implementation project (path: ':build-tools:logger')
-    
-    api project (path: ':build-tools:eventbus')
+    api project(path: ':eventbus')
 }
