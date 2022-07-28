@@ -15,6 +15,7 @@ import com.itsaky.androidide.R;
 import com.itsaky.androidide.TerminalActivity;
 import com.itsaky.androidide.databinding.FragmentMainBinding;
 import com.itsaky.androidide.projects.ProjectManager;
+import com.itsaky.androidide.fragments.SdkManager;
 
 import java.io.File;
 
@@ -43,6 +44,7 @@ public class MainFragment extends BaseFragment
     binding.openProject.setOnClickListener(this);
     binding.openTerminal.setOnClickListener(this);
     binding.gotoPreferences.setOnClickListener(this);
+binding.openSdk.setOnClickListener(this);
   }
 
   @Override
@@ -61,6 +63,13 @@ public class MainFragment extends BaseFragment
       pickDirectory();
     } else if (p1.getId() == binding.openTerminal.getId()) {
       startActivity(new Intent(requireActivity(), TerminalActivity.class));
+    } else if(p1.getId() == binding.openSdk.getId()){
+	getParentFragmentManager()
+        .beginTransaction()
+        .replace(R.id.container,new SdkManager(), "SDK_MANAGER")
+        .addToBackStack(null)
+        .commit();
+    
     }
   }
 
